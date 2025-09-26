@@ -1,101 +1,66 @@
-import Image from "next/image";
+"use client"
+
+import Center from "@/components/Center";
+import StatusToggle from "@/components/StatusToggle";
+import TimelineChart from "@/components/Timeline";
+import Top from "@/components/Top";
+import { Button } from "@/components/ui/button";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import { useState } from "react";
+
+enum Toggle {
+  Actual = "actual",
+  Original = "original"
+}
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const [toggle, setToggle] = useState<Toggle>(Toggle.Original)
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
+  console.log(toggle);
+
+
+  return (
+    <div className="bg-[#101010] text-white min-h-screen h-auto">
+      <Top />
+      <div className="w-full h-[30px] bg-transparent flex justify-center place-items-center mb-2">
+        <StatusToggle />
+      </div>
+      <Center toggle={toggle} />
+      <div className="w-full h-[30px] my-4 bg-transparent flex justify-center place-items-center mb-2">
+        <ToggleGroup type="single" value={toggle}
+          onValueChange={(val: Toggle) => {
+            if (val) setToggle(val);
+          }}
+        >
+          <ToggleGroupItem value={Toggle.Original} aria-label="Plano Original" 
+          className="bg-[#1B1B1B] rounded-lg border-[#41648A] border-2 data-[state=on]:bg-transparent data-[state=on]:text-white ">
+            <input type="checkbox" checked={toggle === "original"} name="original" id="original"
+              className={`h-5 w-5 cursor-pointer appearance-none rounded-full border-2 
+                transition-all duration-200
+                ${toggle === "original"
+                  ? "border-[#41648A] bg-[#41648A] ring-2 ring-offset-1 ring-offset-black ring-[#41648A]"
+                  : "border-gray-500 bg-[#1B1B1B]"}
+              `}
             />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+            <span className="max-md:hidden">Plano Original</span>
+          </ToggleGroupItem>
+          <ToggleGroupItem value={Toggle.Actual} aria-label="Situacao" 
+          className="bg-[#1B1B1B] rounded-lg border-[#48F7A1] border-2 data-[state=on]:bg-transparent data-[state=on]:text-white">
+            <input type="checkbox" name="actual" id="actual" checked={toggle === "actual"}
+              className={`h-5 w-5 cursor-pointer appearance-none rounded-full border-2 
+                transition-all duration-200
+                ${toggle === "actual"
+                  ? "border-[#48F7A1] bg-[#48F7A1] ring-2 ring-offset-1 ring-offset-black ring-[#48F7A1]"
+                  : "border-gray-500 bg-[#1B1B1B]"}
+              `}
+            />
+            <span className="max-md:hidden">Situacao atual {`${Date.prototype.getMonth.call(new Date())}/${Date.prototype.getFullYear.call(new Date())}`}</span>
+          </ToggleGroupItem>
+          <Button className="bg-[#1B1B1B] rounded-lg bg-transparent hover:bg-transparent border-2 border-[#F7B748]">Realizado</Button>
+          <Button className="bg-[#1B1B1B] rounded-lg bg-transparent hover:bg-transparent ">+ Adicionar Simulacion</Button>
+        </ToggleGroup>
+      </div>
+      <TimelineChart />
+    </div >
   );
 }
