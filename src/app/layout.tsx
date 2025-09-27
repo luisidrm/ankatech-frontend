@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import Inter from "next/font/google";
 import "./globals.css";
 import ReactQueryProvider from "@/components/TanStackWrapper";
+import SideBar from "../components/SideBar";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -27,13 +28,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <ReactQueryProvider>
-        {children}
+      <ReactQueryProvider>s
+          <body
+            className={`${geistSans.variable} ${geistMono.variable} antialiased w-full`}
+          >
+            <SideBar />
+            {children}
+          </body>
         </ReactQueryProvider>
-      </body>
-    </html>
+    </html >
   );
 }
