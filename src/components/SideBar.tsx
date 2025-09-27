@@ -18,23 +18,34 @@ import {
   Briefcase,
   Wallet,
 } from "lucide-react";
+import Image from "next/image";
 
 export default function Sidebar() {
   return (
-    <aside className="h-screen w-64 bg-black border-r border-gray-800 flex flex-col">
-      <div className="flex items-center justify-center py-6">
-        <div className="bg-gradient-to-r from-red-500 to-yellow-500 text-white px-4 py-2 rounded-full font-semibold">
-          Anka
+    <aside className="h-screen fixed w-64 bg-[#1B1B1B] border-r-2 rounded-r-xl border-[#1B1B1B] shadow-lg flex flex-col z-50">
+      <div 
+      className="flex items-center justify-center py-12 "
+      >
+        <div className="bg-[#1B1B1B] px-6 py-1">
+          <Image
+            src={"/image 8.png"}
+            width={90}
+            height={12}
+            alt="logo"
+            className="object-fit"
+          />
         </div>
       </div>
 
       <ScrollArea className="flex-1">
         <nav className="px-3 text-gray-300">
-          <Accordion type="single" collapsible className="w-full">
-            <AccordionItem value="clientes">
+          <Accordion type="single" collapsible className="w-40 text-sm place-self-center">
+            <AccordionItem value="clientes" className="no-underline ">
               <AccordionTrigger className="flex items-center gap-2 hover:no-underline">
-                <Users size={18} />
-                <span>Clientes</span>
+                <div className="flex items-center gap-2 hover:no-underline">
+                  <Users size={18} />
+                  <span>Clientes</span>
+                </div>
               </AccordionTrigger>
               <AccordionContent>
                 <ul className="ml-6 flex flex-col gap-2 py-2">
@@ -53,39 +64,46 @@ export default function Sidebar() {
 
             <AccordionItem value="prospects">
               <AccordionTrigger className="flex items-center gap-2 hover:no-underline">
-                <UserPlus size={18} />
-                <span>Prospects</span>
+                <div className="flex items-center gap-2 hover:no-underline">
+                  <UserPlus size={18} />
+                  <span>Prospects</span>
+                </div>
               </AccordionTrigger>
-              <AccordionContent className="ml-6 py-2">
-                <p className="text-sm">Submenu here…</p>
-              </AccordionContent>
             </AccordionItem>
 
             <AccordionItem value="consolidacao">
               <AccordionTrigger className="flex items-center gap-2 hover:no-underline">
-                <FileSpreadsheet size={18} />
-                <span>Consolidação</span>
+                <div className="flex items-center gap-2 hover:no-underline">
+                  <FileSpreadsheet size={18} />
+                  <span>Consolidação</span>
+                </div>
               </AccordionTrigger>
             </AccordionItem>
 
             <AccordionItem value="crm">
               <AccordionTrigger className="flex items-center gap-2 hover:no-underline">
-                <Briefcase size={18} />
-                <span>CRM</span>
+                <div className="flex items-center gap-2 hover:no-underline">
+                  <Briefcase size={18} />
+                  <span>CRM</span>
+                </div>
               </AccordionTrigger>
             </AccordionItem>
 
             <AccordionItem value="captacao">
               <AccordionTrigger className="flex items-center gap-2 hover:no-underline">
-                <Wallet size={18} />
-                <span>Captação</span>
+                <div className="flex items-center gap-2 hover:no-underline">
+                  <Wallet size={18} />
+                  <span>Captação</span>
+                </div>
               </AccordionTrigger>
             </AccordionItem>
 
             <AccordionItem value="financeiro">
               <AccordionTrigger className="flex items-center gap-2 hover:no-underline">
-                <FileSpreadsheet size={18} />
-                <span>Financeiro</span>
+                <div className="flex items-center gap-2 hover:no-underline">
+                  <FileSpreadsheet size={18} />
+                  <span>Financeiro</span>
+                </div>
               </AccordionTrigger>
             </AccordionItem>
           </Accordion>
