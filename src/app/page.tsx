@@ -1,5 +1,6 @@
 "use client"
 
+import Bottom from "@/components/Bottom";
 import Center from "@/components/Center";
 import StatusToggle from "@/components/StatusToggle";
 import TimelineChart from "@/components/Timeline";
@@ -20,7 +21,7 @@ export default function Home() {
 
 
   return (
-    <div className="bg-[#101010] text-white min-h-screen h-auto">
+    <div className="bg-[#101010] text-white h-auto">
       <Top />
       <div className="w-full h-[30px] bg-transparent flex justify-center place-items-center mb-2">
         <StatusToggle />
@@ -61,6 +62,9 @@ export default function Home() {
         </ToggleGroup>
       </div>
       <TimelineChart />
+      <Bottom 
+        toggle={toggle}
+        />
     </div >
   );
 }

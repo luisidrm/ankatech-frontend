@@ -20,9 +20,9 @@ export default function RootLayout({
   const [open, setOpen] = useState(false);
   return (
     <html lang="en">
-      <ReactQueryProvider>s
+      <ReactQueryProvider>
         <body
-          className={"antialiased w-full"}
+          className={"antialiased w-full h-auto bg-[#101010]"}
         >
           {open && <SideBar />}
           <Button
