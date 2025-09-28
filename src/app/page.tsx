@@ -8,6 +8,8 @@ import TimelineChart from "@/components/Timeline";
 import Top from "@/components/Top";
 import { Button } from "@/components/ui/button";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+// import { projectionGet } from "@/lib/projection/projection";
+// import { useQuery } from "@tanstack/react-query";
 import { EllipsisVertical } from "lucide-react";
 import { useState } from "react";
 
@@ -19,6 +21,8 @@ enum Toggle {
 export default function Home() {
   const [toggle, setToggle] = useState<Toggle>(Toggle.Original)
   const [option, setOption] = useState(false);
+
+  // const data = useQuery({ queryKey: ['id'], queryFn: projectionGet(1,) })
 
 
   return (
