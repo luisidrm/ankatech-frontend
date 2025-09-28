@@ -1,17 +1,32 @@
 import { ArrowDownIcon } from "lucide-react";
 import { Card, CardContent, CardFooter, CardTitle } from "./ui/card";
 import { ToggleGroup, ToggleGroupItem } from "./ui/toggle-group";
+import { useState } from "react";
 
-export default function Bottom({toggle}: Readonly<{toggle?: string}>) {
+enum Selector{
+  Finance = "finance",
+  RealEstate = "real_estate"
+}
+
+export default function Bottom({toggle}: Readonly<{toggle: string}>) {
+  const [selector, setSelector] = useState<Selector>(Selector.Finance)
+
   return (
     <div className="w-full h-auto bg-transparent mb-2">
       <div className="flex justify-between items-center p-4 ">
-        <h1 className="font-semibold text-2xl">Movements</h1>
-        <ToggleGroup type="single" className="bg-transparent" defaultValue="left" aria-label="Text alignment">
-          <ToggleGroupItem value="left" className="data-[state=on]:bg-white bg-gray-800 data-[state=on]:text-black rounded-full">
+        <h1 className={`font-semibold text-2xl ${toggle==="actual"?"text-[#48F7A1]":"text-[#67AEFA]"}`}>Movements</h1>
+        <ToggleGroup 
+        defaultValue={selector}
+        type="single" value={selector} className="bg-transparent"
+        aria-label="Text alignment"
+        onValueChange={(val: Selector) => {
+            if (val) setSelector(val);
+          }}
+        >
+          <ToggleGroupItem value={Selector.Finance} className="data-[state=on]:bg-white bg-gray-800 data-[state=on]:text-black rounded-full">
             Financieiras
           </ToggleGroupItem>
-          <ToggleGroupItem value="right" className="data-[state=on]:bg-white bg-gray-800 data-[state=on]:text-black rounded-full">
+          <ToggleGroupItem value={Selector.RealEstate} className="data-[state=on]:bg-white bg-gray-800 data-[state=on]:text-black rounded-full">
             Real Estate
           </ToggleGroupItem>
         </ToggleGroup>
@@ -30,7 +45,7 @@ export default function Bottom({toggle}: Readonly<{toggle?: string}>) {
         </Card>
       </div>
       <div className="items-center p-4 ">
-        <h1 className="font-semibold text-2xl">Insurance</h1>
+        <h1 className={`font-semibold text-2xl ${toggle==="actual"?"text-[#48F7A1]":"text-[#67AEFA]"}`}>Insurance</h1>
       </div>
 
       <div className="w-full p-4 grid grid-cols-1 md:grid-cols-2">
