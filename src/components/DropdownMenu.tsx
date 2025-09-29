@@ -1,38 +1,16 @@
-import {
-  ContextMenu,
-  ContextMenuContent,
-  ContextMenuItem,
-  ContextMenuShortcut,
-  ContextMenuSub,
-  ContextMenuSubContent,
-  ContextMenuSubTrigger,
-} from "@/components/ui/context-menu"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { EllipsisVertical } from "lucide-react";
 
-export function DropdownMenu({option}: Readonly<{option: boolean}>) {
+export default function Dropdown() {
   return (
-    <ContextMenu open={option}>
-      <ContextMenuContent className="w-52">
-        <ContextMenuItem inset>
-          Back
-          <ContextMenuShortcut>⌘[</ContextMenuShortcut>
-        </ContextMenuItem>
-        <ContextMenuItem inset disabled>
-          Forward
-          <ContextMenuShortcut>⌘]</ContextMenuShortcut>
-        </ContextMenuItem>
-        <ContextMenuItem inset>
-          Reload
-          <ContextMenuShortcut>⌘R</ContextMenuShortcut>
-        </ContextMenuItem>
-        <ContextMenuSub>
-          <ContextMenuSubTrigger inset>More Tools</ContextMenuSubTrigger>
-          <ContextMenuSubContent className="w-44">
-            <ContextMenuItem>Save Page...</ContextMenuItem>
-            <ContextMenuItem>Create Shortcut...</ContextMenuItem>
-            <ContextMenuItem>Name Window...</ContextMenuItem>
-          </ContextMenuSubContent>
-        </ContextMenuSub>
-      </ContextMenuContent>
-    </ContextMenu>
+    <DropdownMenu>
+      <DropdownMenuTrigger className="bg-[#1B1B1B] text-white border-none"><EllipsisVertical /></DropdownMenuTrigger>
+      <DropdownMenuContent className="bg-[#1B1B1B] text-white border-none">
+        <DropdownMenuLabel>Edit Simulation</DropdownMenuLabel>
+        <DropdownMenuItem>Delete Simulation</DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem>Create new Version</DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   )
 }

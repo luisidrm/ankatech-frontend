@@ -32,7 +32,7 @@ export default function ProjectionCard({
       <div className="w-full h-10 flex items-center justify-center">
         {!showStripes ? (
                 
-          <Progress value={(value/7000000)*100}  className="w-40 h-full rounded-xl bg-gradient-to-r from-cyan-400 to-indigo-900" />
+          <Progress value={(value/7000000)*100}  className="w-40 h-full rounded-sm bg-gradient-to-r from-cyan-400 to-indigo-900" />
         ) : (
           <div className="flex gap-1">
             {Array.from({ length: 20 }).map((_, i) => (
