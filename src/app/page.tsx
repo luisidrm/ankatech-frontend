@@ -4,7 +4,7 @@ import Bottom from "@/components/Bottom";
 import Center from "@/components/Center";
 import { DropdownMenu } from "@/components/DropdownMenu";
 import StatusToggle from "@/components/StatusToggle";
-import TimelineChart from "@/components/Timeline";
+import Timeline from "@/components/Timeline";
 import Top from "@/components/Top";
 import { Button } from "@/components/ui/button";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
@@ -70,7 +70,7 @@ export default function Home() {
           <Button className="bg-[#1B1B1B] rounded-lg bg-transparent hover:bg-transparent ">+ Adicionar Simulacion</Button>
         </ToggleGroup>
       </div>
-      <TimelineChart />
+      <Timeline />
       <Bottom
         toggle={toggle}
       />

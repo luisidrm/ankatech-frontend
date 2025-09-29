@@ -111,7 +111,7 @@ export function AllocationTimeline({ items }: Props) {
                 </span>
                 <Progress 
                   value={(item.progress.current / item.progress.total) * 100}
-                  className="h-2 bg-white text-orange-500"
+                  className="h-2 bg-white"
                 />
               </div>
             )}
