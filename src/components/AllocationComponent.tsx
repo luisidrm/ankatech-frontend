@@ -10,9 +10,11 @@ import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuIte
 
 type Props = {
   items: Allocation[]
+  open:boolean
+  setOpen
 }
 
-export function AllocationTimeline({ items }: Props) {
+export function AllocationTimeline({ items,open, setOpen }: Props) {
   return (
     <Card className="bg-black border-gray-700 text-white w-[90%]">
       <CardHeader className="flex flex-row items-center justify-between">
@@ -35,7 +37,7 @@ export function AllocationTimeline({ items }: Props) {
               <DropdownMenuItem>Encerradas</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-          <Button className="bg-orange-600 hover:bg-orange-700 text-white">
+          <Button onClick={()=>setOpen(!open)} className="bg-orange-600 hover:bg-orange-700 text-white">
             <Plus className="mr-2 h-4 w-4" />
             Adicionar
           </Button>

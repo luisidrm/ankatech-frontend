@@ -1,34 +1,18 @@
 import { z } from "zod"
 
-export const financialSchema = z.object({
-  type: z.literal("financial"),
-  name: z.string().min(1, "Required"),
-  value: z.number().min(1, "Value must be greater than 0"),
-  date: z.string().min(1, "Required"), // ISO date string
-})
+export const typeSchema = z.enum(["financial","real-estate"])
+export type TypeSchema = z.infer<typeof typeSchema>
 
-export const realEstateSchema = z.object({
-  type: z.literal("real-estate"),
+export const allocationSchema = z.object({
+  type: typeSchema,
   name: z.string().min(1, "Required"),
   value: z.number().min(1, "Value must be greater than 0"),
-  withFinancing: z.boolean().default(false),
-  startDate: z.string().optional(),
+  startDate: z.string(),
   installments: z.number().optional(),
   interestRate: z.number().optional(),
   downPayment: z.number().optional(),
-}).refine(
-  (data) =>
-    !data.withFinancing ||
-    (data.startDate && data.installments && data.interestRate !== undefined && data.downPayment !== undefined),
-  {
-    message: "All financing fields are required when financing is included",
-    path: ["withFinancing"],
-  }
-)
+})
+export const updateAllocation = allocationSchema.partial()
 
-export const allocationSchema = z.discriminatedUnion("type", [
-  financialSchema,
-  realEstateSchema,
-])
-
-export type AllocationFormData = z.infer<typeof allocationSchema>
+export type CreateAllocationFormData = z.infer<typeof allocationSchema>
+export type UpdateAllocationFormData = z.infer<typeof updateAllocation>

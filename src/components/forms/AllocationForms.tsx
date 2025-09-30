@@ -2,7 +2,7 @@
 
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { allocationSchema, AllocationFormData } from "@/schemas/allocation"
+import { allocationSchema, type AllocationFormData } from "@/schemas/allocation"
 import {
   Form,
   FormField,
@@ -16,9 +16,24 @@ import { Button } from "@/components/ui/button"
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select"
 import { Checkbox } from "@/components/ui/checkbox"
 import { useState } from "react"
+import { createAllocation } from "@/lib/request/allocation"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
 
-export default function AllocationForm() {
+
+export default function AllocationForm({open, setOpen}) {
+  const queryClient = useQueryClient()
   const [type, setType] = useState<"financial" | "real-estate">("financial")
+
+  const mutation = useMutation({
+    mutationFn: (data: AllocationFormData) => createAllocation(data),
+    onSuccess: () => {
+      // refetch allocations after success
+      queryClient.invalidateQueries({ queryKey: ["allocations"] })
+    },
+    onError: (error: unknown) => {
+      console.error("❌ Error saving allocation:", error)
+    },
+  })
 
   const form = useForm<AllocationFormData>({
     resolver: zodResolver(allocationSchema),
@@ -26,18 +41,22 @@ export default function AllocationForm() {
       type: "financial",
       name: "",
       value: 0,
+      date: "",
     },
   })
 
-  function onSubmit(values: AllocationFormData) {
-    console.log("Form data:", values)
+  const onSubmit = (values: AllocationFormData) => {
+    mutation.mutate(values)
   }
 
+
   return (
+    <div className="absolute z-40 place-items-center  p-8 backdrop-blur-lg w-full h-[100vh]">
+
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-6 max-w-lg"
+        className="space-y-6 max-w-lg backdrop-blur-xl rounded-lg w-[70%] text-black p-10 bg-[#1B1B1B]"
       >
         {/* Allocation Type */}
         <FormField
@@ -45,7 +64,7 @@ export default function AllocationForm() {
           name="type"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Tipo</FormLabel>
+              <FormLabel className="text-white">Tipo</FormLabel>
               <Select
                 value={field.value}
                 onValueChange={(val) => {
@@ -66,13 +85,12 @@ export default function AllocationForm() {
           )}
         />
 
-        {/* Common Fields */}
         <FormField
           control={form.control}
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Nome</FormLabel>
+              <FormLabel className="text-white">Nome</FormLabel>
               <FormControl>
                 <Input {...field} placeholder="Nome da alocação" />
               </FormControl>
@@ -86,7 +104,7 @@ export default function AllocationForm() {
           name="value"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Valor</FormLabel>
+              <FormLabel className="text-white">Valor</FormLabel>
               <FormControl>
                 <Input
                   type="number"
@@ -99,14 +117,13 @@ export default function AllocationForm() {
           )}
         />
 
-        {/* Financial Fields */}
         {type === "financial" && (
           <FormField
             control={form.control}
             name="date"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Data</FormLabel>
+                <FormLabel className="text-white">Data</FormLabel>
                 <FormControl>
                   <Input type="date" {...field} />
                 </FormControl>
@@ -116,19 +133,19 @@ export default function AllocationForm() {
           />
         )}
 
-        {/* Real Estate Fields */}
         {type === "real-estate" && (
           <>
             <FormField
               control={form.control}
               name="withFinancing"
               render={({ field }) => (
-                <FormItem className="flex items-center gap-2">
+                <FormItem className="flex items-center gap-2 place-items-center ">
                   <Checkbox
                     checked={field.value}
                     onCheckedChange={field.onChange}
+                    className="h-5 w-5 cursor-pointer appearance-none rounded-full border-2 bg-white"
                   />
-                  <FormLabel>Financiado?</FormLabel>
+                  <FormLabel className="text-white ">Financiado?</FormLabel>
                   <FormMessage />
                 </FormItem>
               )}
@@ -141,7 +158,7 @@ export default function AllocationForm() {
                   name="startDate"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Data inicial</FormLabel>
+                      <FormLabel className="text-white">Data inicial</FormLabel>
                       <FormControl>
                         <Input type="date" {...field} />
                       </FormControl>
@@ -155,7 +172,7 @@ export default function AllocationForm() {
                   name="installments"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Número de parcelas</FormLabel>
+                      <FormLabel className="text-white">Número de parcelas</FormLabel>
                       <FormControl>
                         <Input
                           type="number"
@@ -175,7 +192,7 @@ export default function AllocationForm() {
                   name="interestRate"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Taxa de juros (%)</FormLabel>
+                      <FormLabel className="text-white">Taxa de juros (%)</FormLabel>
                       <FormControl>
                         <Input
                           type="number"
@@ -196,7 +213,7 @@ export default function AllocationForm() {
                   name="downPayment"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Valor entrada</FormLabel>
+                      <FormLabel className="text-white">Valor entrada</FormLabel>
                       <FormControl>
                         <Input
                           type="number"
@@ -214,9 +231,12 @@ export default function AllocationForm() {
             )}
           </>
         )}
-
-        <Button type="submit">Salvar</Button>
+        <div className="px-4 flex justify-center w-full">
+        <Button type="submit" variant={"secondary"} className="text-black w-[40%] mr-6">Salvar</Button>
+        <Button type="button" variant={"destructive"} onClick={()=>setOpen(!open)} className="text-white">Cancelar</Button>
+        </div>
       </form>
     </Form>
+    </div>
   )
 }
