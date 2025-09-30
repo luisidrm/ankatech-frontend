@@ -4,6 +4,7 @@ export const typeSchema = z.enum(["financial","real-estate"])
 export type TypeSchema = z.infer<typeof typeSchema>
 
 export const allocationSchema = z.object({
+  id: z.int().optional(),
   type: typeSchema,
   name: z.string().min(1, "Required"),
   value: z.number().min(1, "Value must be greater than 0"),
@@ -13,7 +14,7 @@ export const allocationSchema = z.object({
   interestRate: z.number().optional(),
   downPayment: z.number().optional(),
 })
-export const updateAllocation = allocationSchema.partial()
+export const updateAllocationSchema = allocationSchema.partial()
 
 export type CreateAllocationFormData = z.infer<typeof allocationSchema>
-export type UpdateAllocationFormData = z.infer<typeof updateAllocation>
+export type UpdateAllocationFormData = z.infer<typeof updateAllocationSchema>

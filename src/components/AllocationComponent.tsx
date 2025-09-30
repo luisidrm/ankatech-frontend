@@ -4,28 +4,19 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Progress } from "@/components/ui/progress"
-import { Allocation } from "@/types/allocation"
 import { MoreVertical, Pencil, Plus } from "lucide-react"
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from "@/components/ui/dropdown-menu"
-import { updateAllocation } from "@/lib/request/allocation"
-import { useState } from "react"
-import { UpdateAllocationFormData } from "@/schemas/allocation"
+import type { CreateAllocationFormData, UpdateAllocationFormData } from "@/schemas/allocation"
 
 type Props = {
-  items: Allocation[]
-  open:boolean
-  setOpen
+  items: CreateAllocationFormData[]
+  open: boolean
+  setOpen: (arg0: boolean) => void
+  fillDuplicate: (arg0: UpdateAllocationFormData) => void
+  fillUpdateData: (arg0: UpdateAllocationFormData)=>void
 }
 
-export function AllocationTimeline({ items,open, setOpen }: Props) {
-
-  const [updateData,setUpdate] = useState<UpdateAllocationFormData>({})
-  const [open, setOpen] = useState(false)
-
-  const fillUpdateData=(item:UpdateAllocationFormData)=>{
-    setUpdate(item)
-    setOpen(!open)
-  }
+export function AllocationTimeline({ items, open, setOpen, fillDuplicate, fillUpdateData }: Props) {
 
   return (
     <Card className="bg-black border-gray-700 text-white w-[90%]">
@@ -37,10 +28,10 @@ export function AllocationTimeline({ items,open, setOpen }: Props) {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <div className="flex items-center gap-2">
-              Alocações:
-              <Button variant="outline" className="bg-black border-gray-600 text-white rounded-full hover:bg-gray-800">
-                Todas
-              </Button>
+                Alocações:
+                <Button variant="outline" className="bg-black border-gray-600 text-white rounded-full hover:bg-gray-800">
+                  Todas
+                </Button>
               </div>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="bg-black border-gray-700 text-white">
@@ -49,7 +40,7 @@ export function AllocationTimeline({ items,open, setOpen }: Props) {
               <DropdownMenuItem>Encerradas</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-          <Button onClick={()=>setOpen(!open)} className="bg-orange-600 hover:bg-orange-700 text-white">
+          <Button onClick={() => setOpen(!open)} className="bg-orange-600 hover:bg-orange-700 text-white">
             <Plus className="mr-2 h-4 w-4" />
             Adicionar
           </Button>
@@ -59,25 +50,25 @@ export function AllocationTimeline({ items,open, setOpen }: Props) {
       <CardContent className="flex flex-col gap-4">
         {items.map((item) => (
           <div
-            key={item.id}
+            key={item.name}
             className="flex flex-col gap-2 rounded-lg border border-gray-700 p-4 z-20 bg-[#1B1B1B]"
           >
             <div className="flex items-center justify-between">
               <div className="flex flex-col gap-1">
-                <span className="font-semibold">{item.title}</span>
+                <span className="font-semibold">{item.name}</span>
                 <div className="flex items-center gap-2">
                   <Badge variant="outline" className="bg-green-900 text-green-200">
-                    {item.category}
+                    {item.type}
                   </Badge>
-                  {item.financed && (
+                  {item.withFinancing && (
                     <Badge variant="outline" className="bg-gray-800 text-white">
                       $ Financiado
                     </Badge>
                   )}
                 </div>
-                {item.start && (
+                {item.startDate && (
                   <span className="text-sm text-gray-400">
-                    {item.start} {item.end && ` - ${item.end}`}
+                    {item.startDate}
                   </span>
                 )}
               </div>
@@ -87,23 +78,23 @@ export function AllocationTimeline({ items,open, setOpen }: Props) {
                   size="sm"
                   variant="outline"
                   className="flex items-center gap-1 border-orange-600 text-orange-500 hover:bg-orange-900"
-                  onClick={()=>updateAllocation()}
+                  onClick={()=>fillDuplicate(item)}
                 >
                   <Pencil className="h-4 w-4" />
                   Atualizar
                 </Button>
                 <div className="text-right">
                   <div className="font-semibold">
-                    R$ {item.amount.toLocaleString("pt-BR")}
+                    R$ {item.value}
                   </div>
-                  {item.totalAmount && (
+                  {item.downPayment && (
                     <div className="text-sm text-gray-400">
-                      de R$ {item.totalAmount.toLocaleString("pt-BR")}
+                      de R$ {item.downPayment}
                     </div>
                   )}
-                  {item.lastUpdate && (
+                  {item.interestRate && (
                     <div className="text-xs text-gray-500">
-                      Última atualização: {item.lastUpdate}
+                      Última atualização: {item.interestRate}
                     </div>
                   )}
                 </div>
@@ -112,24 +103,22 @@ export function AllocationTimeline({ items,open, setOpen }: Props) {
                     <MoreVertical className="text-gray-400" />
                   </DropdownMenuTrigger>
                   <DropdownMenuContent className="bg-black border-gray-700 text-white">
-                    <DropdownMenuItem>Editar</DropdownMenuItem>
-                    <DropdownMenuItem>Excluir</DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => fillUpdateData(item)}>Editar</DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
               </div>
             </div>
-
-            {item.progress && (
+            {item.withFinancing &&
               <div className="flex flex-col gap-1 w-[60%]">
                 <span className="text-xs text-gray-400">
-                  Progresso: {item.progress.current}/{item.progress.total} parcelas
+                  Progresso: {item.value - item.downPayment}/{item.installments} parcelas
                 </span>
-                <Progress 
-                  value={(item.progress.current / item.progress.total) * 100}
+                <Progress
+                  value={(item.value - item.downPayment / item.installments) * 100}
                   className="h-2 bg-white"
                 />
               </div>
-            )}
+            }
           </div>
         ))}
       </CardContent>

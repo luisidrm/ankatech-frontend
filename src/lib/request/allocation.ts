@@ -18,8 +18,17 @@ export async function createAllocation(data: CreateAllocationFormData) {
   })
 }
 
-export async function updateAllocation(data: UpdateAllocationFormData){
-  await axios.put(`${baseURL}/api/allocations`,{
+export async function editAllocation(id:number,name:string, value:number){
+  await axios.put(`${baseURL}/api/allocations/${id}/duplicate`,{
+    name,
+    value
+  }).then(res=>{
+    return res.data
+  })
+}
+
+export async function updateAllocation (data: UpdateAllocationFormData){
+  await axios.put(`${baseURL}/api/allocations/${data.id}/duplicate`,{
     data
   }).then(res=>{
     return res.data
