@@ -7,6 +7,9 @@ import { Progress } from "@/components/ui/progress"
 import { Allocation } from "@/types/allocation"
 import { MoreVertical, Pencil, Plus } from "lucide-react"
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from "@/components/ui/dropdown-menu"
+import { updateAllocation } from "@/lib/request/allocation"
+import { useState } from "react"
+import { UpdateAllocationFormData } from "@/schemas/allocation"
 
 type Props = {
   items: Allocation[]
@@ -15,6 +18,15 @@ type Props = {
 }
 
 export function AllocationTimeline({ items,open, setOpen }: Props) {
+
+  const [updateData,setUpdate] = useState<UpdateAllocationFormData>({})
+  const [open, setOpen] = useState(false)
+
+  const fillUpdateData=(item:UpdateAllocationFormData)=>{
+    setUpdate(item)
+    setOpen(!open)
+  }
+
   return (
     <Card className="bg-black border-gray-700 text-white w-[90%]">
       <CardHeader className="flex flex-row items-center justify-between">
@@ -75,6 +87,7 @@ export function AllocationTimeline({ items,open, setOpen }: Props) {
                   size="sm"
                   variant="outline"
                   className="flex items-center gap-1 border-orange-600 text-orange-500 hover:bg-orange-900"
+                  onClick={()=>updateAllocation()}
                 >
                   <Pencil className="h-4 w-4" />
                   Atualizar

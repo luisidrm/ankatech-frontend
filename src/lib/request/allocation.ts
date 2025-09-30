@@ -1,5 +1,5 @@
 import { baseURL } from "@/routes"
-import type { AllocationFormData } from "../../schemas/allocation"
+import type { CreateAllocationFormData, UpdateAllocationFormData } from "../../schemas/allocation"
 import axios from "axios"
 
 export async function getAllocations(id:number) {
@@ -10,7 +10,7 @@ export async function getAllocations(id:number) {
   })
 }
 
-export async function createAllocation(data: AllocationFormData) {
+export async function createAllocation(data: CreateAllocationFormData) {
     await axios.post(`${baseURL}/api/allocations`,{
       data
     }).then((res)=>{
@@ -18,10 +18,9 @@ export async function createAllocation(data: AllocationFormData) {
   })
 }
 
-export async function updateAllocation(id:number, value:number){
+export async function updateAllocation(data: UpdateAllocationFormData){
   await axios.put(`${baseURL}/api/allocations`,{
-    id,
-    value
+    data
   }).then(res=>{
     return res.data
   })

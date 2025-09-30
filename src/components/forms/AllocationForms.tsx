@@ -2,7 +2,7 @@
 
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { allocationSchema, type AllocationFormData } from "@/schemas/allocation"
+import { type CreateAllocationFormData, allocationSchema } from "@/schemas/allocation"
 import {
   Form,
   FormField,
@@ -25,7 +25,7 @@ export default function AllocationForm({open, setOpen}) {
   const [type, setType] = useState<"financial" | "real-estate">("financial")
 
   const mutation = useMutation({
-    mutationFn: (data: AllocationFormData) => createAllocation(data),
+    mutationFn: (data: CreateAllocationFormData) => createAllocation(data),
     onSuccess: () => {
       // refetch allocations after success
       queryClient.invalidateQueries({ queryKey: ["allocations"] })
@@ -35,17 +35,17 @@ export default function AllocationForm({open, setOpen}) {
     },
   })
 
-  const form = useForm<AllocationFormData>({
+  const form = useForm<CreateAllocationFormData>({
     resolver: zodResolver(allocationSchema),
     defaultValues: {
       type: "financial",
       name: "",
       value: 0,
-      date: "",
+      startDate: "",
     },
   })
 
-  const onSubmit = (values: AllocationFormData) => {
+  const onSubmit = (values: CreateAllocationFormData) => {
     mutation.mutate(values)
   }
 
@@ -120,7 +120,7 @@ export default function AllocationForm({open, setOpen}) {
         {type === "financial" && (
           <FormField
             control={form.control}
-            name="date"
+            name="startDate"
             render={({ field }) => (
               <FormItem>
                 <FormLabel className="text-white">Data</FormLabel>

@@ -7,9 +7,18 @@ import Link from "next/link";
 import { useState } from "react";
 import AllocationForm from "@/components/forms/AllocationForms";
 import { getAllocations } from "@/lib/request/allocation";
+import { UpdateAllocationFormData } from "@/schemas/allocation";
 
 export default function Page() {
   const [open, setOpen] = useState(false)
+
+    const [updateData,setUpdate] = useState<UpdateAllocationFormData>({})
+    const [openUpdate, setOpenUpdate] = useState(false)
+  
+    const fillUpdateData=(item:UpdateAllocationFormData)=>{
+      setUpdate(item)
+      setOpen(!open)
+    }
 
   //   const { data, isLoading, isError } = useQuery({
   //   queryKey: ["allocations"],

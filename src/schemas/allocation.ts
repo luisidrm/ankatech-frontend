@@ -8,6 +8,7 @@ export const allocationSchema = z.object({
   name: z.string().min(1, "Required"),
   value: z.number().min(1, "Value must be greater than 0"),
   startDate: z.string(),
+  withFinancing: z.boolean(),
   installments: z.number().optional(),
   interestRate: z.number().optional(),
   downPayment: z.number().optional(),
