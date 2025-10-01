@@ -106,7 +106,7 @@ export default function Home() {
           <Button className="bg-[#1B1B1B] rounded-lg bg-transparent hover:bg-transparent ">+ Adicionar Simulacion</Button>
         </ToggleGroup>
       </div>
-      <Timeline />
+      <Timeline/>
       <Bottom
         toggle={toggle}
       />
