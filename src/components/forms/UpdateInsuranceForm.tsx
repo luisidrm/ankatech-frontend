@@ -20,12 +20,11 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from ".
 
 type Props = {
   selectedId: number
-  openIn: boolean
   updateInsuranceData: UpdateInsuranceBody
-  setOpenIn: (arg0: boolean) => void
+  fillUpdateDataIn: (arg0: UpdateInsuranceBody) => void
 }
 
-export default function UpdateInsuranceForm({ openIn, updateInsuranceData, setOpenIn }: Props) {
+export default function UpdateInsuranceForm({ updateInsuranceData,fillUpdateDataIn  }: Props) {
   const queryClient = useQueryClient()
 
 
@@ -146,7 +145,7 @@ export default function UpdateInsuranceForm({ openIn, updateInsuranceData, setOp
           />
           <div className="px-4 flex justify-center w-full">
             <Button type="submit" variant={"secondary"} className="text-black w-[40%] mr-6">Salvar</Button>
-            <Button type="button" variant={"destructive"} onClick={() => setOpenIn(!openIn)} className="text-white">Cancelar</Button>
+            <Button type="button" variant={"destructive"} onClick={() => fillUpdateDataIn({})} className="text-white">Cancelar</Button>
           </div>
         </form>
       </Form>

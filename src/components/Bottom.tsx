@@ -11,6 +11,8 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { deleteTransaction, getTransaction } from "@/lib/request/transaction";
 import type { UpdateInsuranceBody } from "@/schemas/insurance.schema";
 import { getInsurance, deleteInsurance } from "@/lib/request/insurance";
+import CreateInsuranceForm from "./forms/CreateInsuranceForm";
+import UpdateInsuranceForm from "./forms/UpdateInsuranceForm";
 
 enum Selector {
   Finance = "finance",
@@ -23,6 +25,7 @@ export default function Bottom({ selectedId, toggle }: Readonly<{ toggle: string
   const [selector, setSelector] = useState<Selector>(Selector.Finance)
 
   const [updateData, setUpdateData] = useState<UpdateTransaction>({})
+  const [updateDataIn, setUpdateDataIn] = useState<UpdateInsuranceBody>({})
 
   const [openIn, setOpenIn] = useState(false)
   const [updateIn, setUpdateIn] = useState(false)
@@ -34,6 +37,10 @@ export default function Bottom({ selectedId, toggle }: Readonly<{ toggle: string
   const fillUpdateData = (item: UpdateTransaction) => {
     setUpdateData(item)
     setOpenUpdate(!openUpdate)
+  }
+    const fillUpdateDataIn = (item: UpdateInsuranceBody) => {
+    setUpdateDataIn(item)
+    setUpdateIn(!updateIn)
   }
 
   const transaction = useQuery({ queryKey: ["transaction"], queryFn: () => getTransaction(selectedId) })
@@ -104,6 +111,18 @@ export default function Bottom({ selectedId, toggle }: Readonly<{ toggle: string
         updateData={updateData}
         fillUpdateData={fillUpdateData}
       />}
+      {openIn && <CreateInsuranceForm
+        openIn={openIn}
+        selectedId={selectedId}
+        setOpenIn={setOpenIn}
+      />}
+      {updateIn&&<UpdateInsuranceForm
+        openIn={updateIn}
+        selectedId={selectedId}
+        updateInsuranceData={updateDataIn}
+        fillUpdateDataIn={fillUpdateDataIn}
+      />
+      }
       <div className="flex justify-between items-center p-4 ">
         <h1 className={`font-semibold text-2xl ${toggle === "actual" ? "text-[#48F7A1]" : "text-[#67AEFA]"}`}>Movements</h1>
         <ToggleGroup
@@ -150,8 +169,9 @@ export default function Bottom({ selectedId, toggle }: Readonly<{ toggle: string
         }
         {!transaction.isSuccess && <p className="text-white">Ocurrio un Error</p>}
       </div>
-      <div className="items-center p-4 ">
+      <div className="flex justify-between place-items-center p-4 ">
         <h1 className={`font-semibold text-2xl ${toggle === "actual" ? "text-[#48F7A1]" : "text-[#67AEFA]"}`}>Insurance</h1>
+        <Button onClick={() => setOpenIn(!openIn)} className="bg-white rounded-full hover:bg-white"><CirclePlus stroke="#000000" /></Button>
       </div>
 
       <div className="w-full p-4 grid grid-cols-1 md:grid-cols-2">

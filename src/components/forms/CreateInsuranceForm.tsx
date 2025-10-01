@@ -25,7 +25,7 @@ type Props = {
   setOpenIn: (arg0: boolean) => void
 }
 
-export default function CreateTransactionForm({ selectedId, openIn, setOpenIn }: Props) {
+export default function CreateInsuranceForm({ selectedId, openIn, setOpenIn }: Props) {
   const queryClient = useQueryClient()
 
   const [type, setType] = useState<InsuranceType>("LIFE")
