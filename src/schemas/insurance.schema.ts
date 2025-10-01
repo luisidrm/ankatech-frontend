@@ -1,9 +1,10 @@
-import { z } from 'zod'
+import { number, z } from 'zod'
 
 export const insuranceTypeSchema = z.enum(['LIFE', 'DISABILITY'])
 export type InsuranceType = z.infer<typeof insuranceTypeSchema>
 
 export const createInsuranceBody = z.object({
+    id:number().optional(),
     name: z.string(),
     type: insuranceTypeSchema,
     premium: z.number().positive("Premium must be positive").multipleOf(0.01),
