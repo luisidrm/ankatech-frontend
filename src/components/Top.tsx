@@ -9,21 +9,29 @@ import {
   SelectValue,
 } from "./ui/select";
 import ProjectionCard from "./ProjectionCard";
+import type{ User } from "@/types/user";
 
-export default function Top() {
+type Props={
+  data: User[]
+  selectedId: string|null
+  setSelectedId: (arg0: string)=>void
+}
+
+export default function Top({data, selectedId, setSelectedId}:Props) {
 
   return (
     <div className="bg-transaparent text-white flex justify-between w-full h-[230px] pl-12 pt-12">
       <div className="bg-transaparent text-white">
-        <Select>
+        <Select onValueChange={(val) => setSelectedId(val)}>
           <SelectTrigger className="w-[250px] h-8 bg-black border-white text-white border-1-white rounded-2xl">
             <SelectValue className="text-xl" />
           </SelectTrigger>
-          <SelectContent className="bg-black border-white text-white overflow-y-scroll scrollbar text-xl">
-            <SelectItem value="option1">Matheus Silvera</SelectItem>
-            <SelectItem value="option2">Option 2</SelectItem>
-            <SelectItem value="option3">Option 3</SelectItem>
-          </SelectContent>
+          <SelectContent  className="bg-black border-white text-white overflow-y-scroll scrollbar text-xl">
+          {data.map(data=>(
+            <SelectItem key={data.id} value={data.id}>{data.name}</SelectItem>
+          ))
+        }
+        </SelectContent>
         </Select>
         <Card className="bg-transparent h-12 border-none pt-6 pl-2">
           <CardDescription className="text-[10px] text-slate-500 font-bold">Patrimonio Liquido Total</CardDescription>

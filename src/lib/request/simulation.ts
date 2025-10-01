@@ -1,8 +1,8 @@
 import { baseURL } from "@/routes";
-import { Simulation } from "@/types/simulation";
+import type{ UpdateSimulationBody } from "@/schemas/simulation.schema";
 import axios from "axios";
 
-export const fetchSimulations = async (id:number): Promise<Simulation[]> => {
+export const fetchSimulations = async (id:number): Promise<UpdateSimulationBody[]> => {
   return await axios.get(`${baseURL}/api/simulation`,{
     params: { id }
   })
@@ -11,13 +11,13 @@ export const fetchSimulations = async (id:number): Promise<Simulation[]> => {
     })
 }
 
-export const editSimulation = async (simulation: Simulation) => {
+export const editSimulation = async (simulation: UpdateSimulationBody) => {
   await axios.put(`${baseURL}/api/simulation/${simulation.id}`, simulation)
     .then(response => {
       return response.data;
     })
 }
-export const deleteSimulation = async (id: string) => {
+export const deleteSimulation = async (id: number) => {
   await axios.delete(`${baseURL}/api/simulation/${id}`)
     .then(response => {
       return response.data;

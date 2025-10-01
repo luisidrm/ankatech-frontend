@@ -1,8 +1,10 @@
 import { z } from 'zod'
 
 export const createSimulationBody = z.object({
+    id:z.number().optional(),
     name: z.string().min(1, "Name is required"),
-    start_date: z.iso.datetime().optional().default(new Date().toISOString()),
+    startDate: z.iso.datetime().optional().default(new Date().toISOString()),
+    interestRate: z.number().optional()
 })
 
 export const updateSimulationBody = createSimulationBody.partial()

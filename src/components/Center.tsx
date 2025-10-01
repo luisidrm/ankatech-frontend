@@ -21,42 +21,13 @@ enum Vista {
   tabular = "tabular",
   detalles = "detalles"
 }
+type Props={
+  projection: unknown[]
+  toggle: Readonly<{ toggle?: string }>
+}
 
-export default function Center({ toggle }: Readonly<{ toggle?: string }>) {
+export default function Center({ projection, toggle }: Props) {
   const [vista, setVista] = useState<Vista>(Vista.original)
-
-  console.log(vista);
-  
-
-  const data = [
-    {
-      year: 2025,
-      financeiro: 1500000,
-      imobilizado: 1179930,
-      total: 2679930,
-    },
-    {
-      year: 2035,
-      financeiro: 2000000,
-      imobilizado: 1173960,
-      total: 3173960,
-    },
-    {
-      year: 2045,
-      financeiro: 12000000,
-      imobilizado: 9739600,
-      total: 21739060,
-    },
-    {
-      year: 2055,
-      financeiro: 14000000,
-      imobilizado: 11000000,
-      total: 25000000,
-    },
-    {
-      year: 2060,
-    },
-  ];
 
   return (
     <div className="bg-transparent text-white md:flex block w-auto px-[60px] min-h-[350px] h-auto">
@@ -72,7 +43,7 @@ export default function Center({ toggle }: Readonly<{ toggle?: string }>) {
         </h1>
         {vista === Vista.original &&
           <ResponsiveContainer className="w-full max-h-[400px]  min-h-[330px]">
-            <LineChart data={data} height={300} width={600} className="pt-2 pb-2">
+            <LineChart data={projection} height={300} width={600} className="pt-2 pb-2">
               <CartesianGrid strokeDasharray="3 3" vertical={false} />
               <XAxis dataKey="year" hide />
               <YAxis dataKey={"total"} className="text-[10px] w-full font-bold flex justify-center" domain={[0, "auto"]}
@@ -114,11 +85,11 @@ export default function Center({ toggle }: Readonly<{ toggle?: string }>) {
         }
         {vista === Vista.tabular &&
           <Tabular
-            data={data}
+            data={projection}
           />
         }
         {vista===Vista.detalles &&
-          <Detalles data={data}/>
+          <Detalles data={projection}/>
         }
       </div>
       {toggle === "actual" && <div className="md:w-[40%] w-full md:pl-8 md:space-y-4 max-md:mt-4 max-md:space-x-4 md:block flex">
