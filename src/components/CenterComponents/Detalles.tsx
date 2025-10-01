@@ -1,10 +1,10 @@
-import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import { Area, AreaChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 
-export default function Detalles({ data }) {
+export default function Detalles({ projection }) {
   return (
     <ResponsiveContainer className="w-full max-h-[400px]  min-h-[330px]">
 
-      <AreaChart data={data}>
+      <AreaChart data={projection}>
         <defs>
           <linearGradient id="financeiroGradient" x1="0" y1="0" x2="0" y2="1">
             <stop offset="5%" stopColor="#34d399" stopOpacity={0.8} />
@@ -31,14 +31,14 @@ export default function Detalles({ data }) {
 
         <Area
           type="monotone"
-          dataKey="financeiro"
+          dataKey="originalPlan"
           stackId="1"
           stroke="#34d399"
           fill="url(#financeiroGradient)"
         />
         <Area
           type="monotone"
-          dataKey="imobilizado"
+          dataKey="currentSituation"
           stackId="1"
           stroke="#60a5fa"
           fill="url(#imobilizadoGradient)"

@@ -19,6 +19,7 @@ import {
   Wallet,
 } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Sidebar() {
   return (
@@ -50,13 +51,13 @@ export default function Sidebar() {
               <AccordionContent>
                 <ul className="ml-6 flex flex-col gap-2 py-2">
                   <li className="flex items-center gap-2 hover:text-white cursor-pointer">
-                    <LayoutDashboard size={16} /> Dashboard
+                    <LayoutDashboard size={16} /> <Link href={"/"}>Dashboard</Link>
                   </li>
                   <li className="flex items-center gap-2 hover:text-white cursor-pointer">
-                    <LineChart size={16} /> Projeção
+                    <LineChart size={16} /> <Link href={"/allocations"}>Allocations</Link>
                   </li>
                   <li className="flex items-center gap-2 hover:text-white cursor-pointer">
-                    <History size={16} /> Histórico
+                    <History size={16} /> <Link href={"/historic"}>Historic</Link>
                   </li>
                 </ul>
               </AccordionContent>

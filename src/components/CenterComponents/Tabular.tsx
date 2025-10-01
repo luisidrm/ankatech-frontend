@@ -6,9 +6,8 @@ export default function Tabular({data}){
               <TableHeader>
                 <TableRow>
                   <TableHead className="text-gray-400">Ano</TableHead>
-                  <TableHead className="text-gray-400">Financeiro</TableHead>
-                  <TableHead className="text-gray-400">Imobilizado</TableHead>
-                  <TableHead className="text-gray-400">Total</TableHead>
+                  <TableHead className="text-gray-400">Original Plan</TableHead>
+                  <TableHead className="text-gray-400">Current Situation</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -16,18 +15,13 @@ export default function Tabular({data}){
                   <TableRow key={row.year}>
                     <TableCell className="font-semibold">{row.year}</TableCell>
                     <TableCell>
-                      {row.financeiro
-                        ? `R$ ${row.financeiro.toLocaleString("pt-BR")}`
+                      {row.originalPlan
+                        ? `R$ ${row.originalPlan.toLocaleString("pt-BR")}`
                         : "—"}
                     </TableCell>
                     <TableCell>
-                      {row.imobilizado
-                        ? `R$ ${row.imobilizado.toLocaleString("pt-BR")}`
-                        : "—"}
-                    </TableCell>
-                    <TableCell className="font-medium">
-                      {row.total
-                        ? `R$ ${row.total.toLocaleString("pt-BR")}`
+                      {row.currentSituation
+                        ? `R$ ${row.currentSituation.toLocaleString("pt-BR")}`
                         : "—"}
                     </TableCell>
                   </TableRow>

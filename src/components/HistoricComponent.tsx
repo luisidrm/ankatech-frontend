@@ -2,34 +2,29 @@
 
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Simulation } from "../types/simulation"
 import { ChevronLeft, ChevronRight } from "lucide-react"
+import type{ UpdateSimulationBody } from "@/schemas/simulation.schema"
+import { getHistoric } from "@/lib/request/historic"
 
 type Props = {
-  simulations: Simulation[]
+  data: unknown[]
+  simulations: UpdateSimulationBody[]
 }
 
-export function SimulationHistory({ simulations }: Props) {
+export function SimulationHistory({ data, simulations }: Props) {
   return (
     <Card className="bg-black text-white border-gray-800 p-6 rounded-xl">
-      {/* User selector */}
       <div className="flex justify-between items-center mb-6">
-        <Select defaultValue="matheus">
+        <Select onValueChange={(val:number)=>getHistoric(value)}>
           <SelectTrigger className="w-[220px] rounded-full bg-black border-gray-600 text-white">
             <SelectValue placeholder="Selecione usuário" />
           </SelectTrigger>
           <SelectContent className="bg-black border-gray-700 text-white">
-            <SelectItem value="matheus">Matheus Silveira</SelectItem>
-            <SelectItem value="joao">João Souza</SelectItem>
+            {data.map(item => (
+              <SelectItem key={item.id} value={item.id}>{item.name}</SelectItem>
+            ))
+            }
           </SelectContent>
         </Select>
       </div>
@@ -51,50 +46,15 @@ export function SimulationHistory({ simulations }: Props) {
                     background: sim.color ?? "linear-gradient(to right,#3b82f6,#9333ea)",
                   }}
                 />
-                <span className="font-medium">{sim.title}</span>
+                <span className="font-medium">{sim.name}</span>
               </div>
-              {!sim.versions && <Button
+              <Button
                 variant="outline"
-                className="rounded-full border-gray-600 text-gray-300 bg-gray-800"
+                className="rounded-full border-none text-gray-300 bg-gray-800"
               >
                 Ver no gráfico
-              </Button>}
+              </Button>
             </div>
-
-            {/* Versions table */}
-            {sim.versions && (
-              <Table>
-                <TableHeader>
-                  <TableRow className="border-gray-700">
-                    <TableHead className="text-gray-400">Data</TableHead>
-                    <TableHead className="text-gray-400">Patrimônio final</TableHead>
-                    <TableHead className="text-gray-400">Data de Aposentadoria</TableHead>
-                    <TableHead className="text-gray-400">Versão</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {sim.versions.map((v, i) => (
-                    <TableRow key={v.version} className="border-gray-800">
-                      <TableCell>{v.date}</TableCell>
-                      <TableCell>
-                        R$ {v.patrimonio.toLocaleString("pt-BR")}
-                      </TableCell>
-                      <TableCell>{v.retirementAge}</TableCell>
-                      <TableCell>{v.version}</TableCell>
-                      <TableCell>
-                        <Button
-                          variant="outline"
-                          className="rounded-full border-none text-gray-300 bg-gray-800"
-                        >
-                          Ver no gráfico
-                        </Button>
-                      </TableCell>
-
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            )}
           </div>
         ))}
       </div>
@@ -116,6 +76,6 @@ export function SimulationHistory({ simulations }: Props) {
           <ChevronRight />
         </Button>
       </div>
-    </Card>
+    </Card >
   )
 }

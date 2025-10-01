@@ -4,7 +4,7 @@ export const createSimulationBody = z.object({
     id:z.number().optional(),
     name: z.string().min(1, "Name is required"),
     startDate: z.iso.datetime().optional().default(new Date().toISOString()),
-    interestRate: z.number().optional()
+    interestRate: z.number().optional(),
 })
 
 export const updateSimulationBody = createSimulationBody.partial()

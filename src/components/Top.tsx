@@ -28,7 +28,7 @@ export default function Top({data, selectedId, setSelectedId}:Props) {
           </SelectTrigger>
           <SelectContent  className="bg-black border-white text-white overflow-y-scroll scrollbar text-xl">
           {data.map(data=>(
-            <SelectItem key={data.id} value={data.id}>{data.name}</SelectItem>
+            <SelectItem key={data.id} value={data.simulationId}>{data.name}</SelectItem>
           ))
         }
         </SelectContent>

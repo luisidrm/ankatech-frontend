@@ -28,6 +28,7 @@ type Props={
 
 export default function Center({ projection, toggle }: Props) {
   const [vista, setVista] = useState<Vista>(Vista.original)
+  
 
   return (
     <div className="bg-transparent text-white md:flex block w-auto px-[60px] min-h-[350px] h-auto">
@@ -53,7 +54,7 @@ export default function Center({ projection, toggle }: Props) {
               />
               <Line
                 type="monotone"
-                dataKey="financeiro"
+                dataKey="originalPlan"
                 stroke="#49F3A5"
                 fill="#49F3A5"
                 fillOpacity={0.5}
@@ -64,20 +65,13 @@ export default function Center({ projection, toggle }: Props) {
 
               <Line
                 type="monotone"
-                dataKey="imobilizado"
+                dataKey="currentSituation"
                 stroke="#67AEFA"
                 fill="#67AEFA"
                 fillOpacity={0.4}
                 strokeWidth={2}
                 strokeDasharray="5 5"
                 dot={false}
-              />
-
-              <Line
-                type="monotone"
-                dataKey="total"
-                stroke="#F1B64E"
-                strokeWidth={2}
               />
 
             </LineChart>
