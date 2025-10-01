@@ -16,7 +16,7 @@ export function SimulationHistory({ data, simulations }: Props) {
   return (
     <Card className="bg-black text-white border-gray-800 p-6 rounded-xl">
       <div className="flex justify-between items-center mb-6">
-        <Select onValueChange={(val:number)=>getHistoric(value)}>
+        <Select onValueChange={(val:number)=>getHistoric(val)}>
           <SelectTrigger className="w-[220px] rounded-full bg-black border-gray-600 text-white">
             <SelectValue placeholder="Selecione usuário" />
           </SelectTrigger>

@@ -47,15 +47,15 @@ export default function Bottom({ selectedId, toggle }: Readonly<{ toggle: string
   const insurance = useQuery({ queryKey: ["insurance"], queryFn: () => getInsurance(selectedId) })
 
 
-  const items: UpdateTransaction[] = [{
-    id: 1,
-    type: "INCOME",
-    value: 2000,
-    frequency: "ONE_TIME",
-    startDate: "23/03/2020",
-    endDate: "23/03/2025"
-  }
-  ]
+  // const items: UpdateTransaction[] = [{
+  //   id: 1,
+  //   type: "INCOME",
+  //   value: 2000,
+  //   frequency: "ONE_TIME",
+  //   startDate: "23/03/2020",
+  //   endDate: "23/03/2025"
+  // }
+  // ]
   // const insurance: UpdateInsuranceBody[] = [{
   //   id: 2,
   //   name: "NoSe",

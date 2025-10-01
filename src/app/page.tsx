@@ -10,10 +10,8 @@ import { Button } from "@/components/ui/button";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { projectionGet } from "@/lib/request/projection";
 import { userList } from "@/lib/request/users";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import type { UpdateSimulationBody } from "@/schemas/simulation.schema";
-import { editSimulation } from "@/lib/request/simulation";
 import UpdateSimulationForm from "@/components/forms/UpdateSimulationForm"
 
 enum Toggle {
@@ -22,7 +20,6 @@ enum Toggle {
 }
 
 export default function Home() {
-  const queryClient = useQueryClient()
 
   const [toggle, setToggle] = useState<Toggle>(Toggle.Original)
   const [selectedId, setSelectedId] = useState<string | null>(null)
@@ -31,7 +28,7 @@ export default function Home() {
 
   const [openUpdate, setOpenUpdate] = useState(false)
 
-  const [duplicateId, setDuplicateId] = useState<number | undefined>()
+  // const [duplicateId, setDuplicateId] = useState<number | undefined>()
 
   const {data} = useQuery({ queryKey: ['users'], queryFn: () => userList() })
 

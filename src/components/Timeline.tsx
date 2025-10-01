@@ -2,13 +2,16 @@
 
 import { getTransaction } from "@/lib/request/transaction"
 import { useQuery } from "@tanstack/react-query"
-import { id } from "zod/v4/locales"
 
 
 const years = [2025, 2030, 2035, 2040, 2045, 2050, 2055, 2060]
 
-export default function Timeline({id:number}) {
-  const {data, isSuccess, isError} = useQuery({
+type Props={
+  id: number
+}
+
+export default function Timeline({id}:Props) {
+  const {data} = useQuery({
     queryKey:["income", "expense"],
     queryFn:()=>getTransaction(id)
   })
@@ -48,7 +51,7 @@ export default function Timeline({id:number}) {
         <div className="flex items-center relative mt-6">
           <span className="absolute -top-6 text-red-400 font-medium">Custo de vida</span>
           <div className="flex-1 border-t border-gray-600 relative">
-            {expenses.map((e, i) => (
+            {data.expenses.map((e) => (
               <div
                 key={e.id}
                 className="absolute flex flex-col items-center"

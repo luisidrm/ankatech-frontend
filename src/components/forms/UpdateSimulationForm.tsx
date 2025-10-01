@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { editSimulation, updateSimulation } from "@/lib/request/simulation"
+import { editSimulation } from "@/lib/request/simulation"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import {type UpdateSimulationBody, updateSimulationBody } from "@/schemas/simulation.schema"
 

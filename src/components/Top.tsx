@@ -17,7 +17,7 @@ type Props={
   setSelectedId: (arg0: string)=>void
 }
 
-export default function Top({data, selectedId, setSelectedId}:Props) {
+export default function Top({data, setSelectedId}:Props) {
 
   return (
     <div className="bg-transaparent text-white flex justify-between w-full h-[230px] pl-12 pt-12">

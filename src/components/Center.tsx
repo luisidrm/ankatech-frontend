@@ -6,8 +6,6 @@ import {
   XAxis,
   YAxis,
   ResponsiveContainer,
-  ReferenceDot,
-  Label,
   LineChart
 } from "recharts";
 import { Card, CardContent, CardFooter, CardTitle } from "./ui/card";

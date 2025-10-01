@@ -45,7 +45,7 @@ export default function CreateInsuranceForm({ selectedId, openIn, setOpenIn }: P
   const form = useForm<CreateInsuranceBody>({
     resolver: zodResolver(createInsuranceBody),
     defaultValues: {
-      type: "LIFE",
+      type: type,
       name: "",
       startDate: "",
       endDate: "",
