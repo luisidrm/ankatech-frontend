@@ -7,15 +7,16 @@ export const frequencySchema = z.enum(['ONE_TIME', 'MONTHLY', 'ANNUAL'])
 export type Frequency = z.infer<typeof frequencySchema>
 
 export const createTransactionBody = z.object({
+    id:z.number().optional(),
     type: transactionTypeSchema,
     value: z.number().positive("Value must be positive").multipleOf(0.01),
     frequency: frequencySchema,
-    start_date: z.iso.datetime(),
-    end_date: z.iso.datetime().optional()
+    startDate: z.string(),
+    endDate: z.string().optional()
 })
 
 export const updateTransactionBody = createTransactionBody.partial()
 
-export type CreateTransactionBody = z.infer<typeof createTransactionBody>
+export type CreateTransaction = z.infer<typeof createTransactionBody>
 
-export type UpdateTransactionBody = z.infer<typeof updateTransactionBody>
+export type UpdateTransaction = z.infer<typeof updateTransactionBody>
