@@ -1,8 +1,5 @@
 "use client"
 
-import type { Metadata } from "next";
-import localFont from "next/font/local";
-import Inter from "next/font/google";
 import "./globals.css";
 import ReactQueryProvider from "@/components/TanStackWrapper";
 import SideBar from "../components/SideBar";
