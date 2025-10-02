@@ -3,7 +3,7 @@ import type{ CreateInsuranceBody, UpdateInsuranceBody } from "@/schemas/insuranc
 import axios from "axios"
 
 export async function getInsurance(id:number){
-  await axios.get(`${baseURL}/api/insurance/`,{
+  const eso = await axios.get(`${baseURL}/api/insurance/`,{
     params:{
       simulationId:id
     }
@@ -11,25 +11,29 @@ export async function getInsurance(id:number){
   .then(res=>{
     return res.data
   })
+  return eso.data
 }
 
 export async function createInsurance(id:number, data:CreateInsuranceBody) {
-  await axios.post(`${baseURL}/api/insurance`,{
+  const eso = await axios.post(`${baseURL}/api/insurance`,{
     simulationId:id,
     data
   }).then(res=>{
     return res.data
   })
+  return eso.data
 }
 
 export async function updateInsurance(data:UpdateInsuranceBody) {
-  await axios.post(`${baseURL}/api/insurance`,{
+  const eso = await axios.post(`${baseURL}/api/insurance`,{
     data
   }).then(res=>{
     return res.data
   })
+  return eso.data
 }
 export async function deleteInsurance(id:number) {
-  await axios.delete(`${baseURL}/api/insurance/${id}`).then(res=> {return res.data} )
+  const eso = await axios.delete(`${baseURL}/api/insurance/${id}`).then(res=> {return res.data} )
+  return eso.data
 
 }

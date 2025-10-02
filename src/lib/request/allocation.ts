@@ -3,34 +3,38 @@ import type { CreateAllocationFormData, UpdateAllocationFormData } from "../../s
 import axios from "axios"
 
 export async function getAllocations(id:number) {
-  await axios.get(`${baseURL}/api/allocations`,{
+  const result = await axios.get(`${baseURL}/api/allocations`,{
     params : {id:id}
   }).then((res)=>{
     return res.data
   })
+  return result.data
 }
 
 export async function createAllocation(data: CreateAllocationFormData) {
-    await axios.post(`${baseURL}/api/allocations`,{
+    const eso = await axios.post(`${baseURL}/api/allocations`,{
       data
     }).then((res)=>{
     return res.data
   })
+  return eso.data
 }
 
 export async function editAllocation(id:number,name:string, value:number){
-  await axios.put(`${baseURL}/api/allocations/${id}/duplicate`,{
+  const eso = await axios.put(`${baseURL}/api/allocations/${id}/duplicate`,{
     name,
     value
   }).then(res=>{
     return res.data
   })
+  return eso.data
 }
 
 export async function updateAllocation (data: UpdateAllocationFormData){
-  await axios.put(`${baseURL}/api/allocations/${data.id}/duplicate`,{
+  const eso = await axios.put(`${baseURL}/api/allocations/${data.id}/duplicate`,{
     data
   }).then(res=>{
     return res.data
   })
+  return eso.data
 }

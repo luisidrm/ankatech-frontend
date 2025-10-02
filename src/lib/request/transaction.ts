@@ -3,44 +3,49 @@ import type { CreateTransaction, UpdateTransaction } from "@/schemas/transaction
 import axios from "axios";
 
 export async function getTransaction(id: number) {
-  await axios.get(`${baseURL}/api/transactions/`, {
+  const eso = await axios.get(`${baseURL}/api/transactions/`, {
     params: {
       id: id
     }
   }).then(res => {
     return res.data
   })
+  return eso.data
 }
 
 export async function createTransaction(id:number, data: CreateTransaction) {
   if (data.frequency === "ONE_TIME") {
-    await axios.post(`${baseURL}/api/transactions`, {
+    const eso = await axios.post(`${baseURL}/api/transactions`, {
       simulationdId:id,
       data
     }).then(res => {
       return res.data
     })
+    return eso.data
   } else {
-    await axios.post(`${baseURL}/api/periodictransactions`, {
+    const eso = await axios.post(`${baseURL}/api/periodictransactions`, {
       simulationdId:id,
       data
     }).then(res => {
       return res.data
     })
+    return eso.data
   }
 }
 
 export async function updateTransaction(data: UpdateTransaction) {
-  await axios.put(`${baseURL}/api/transactions/${data.id}`, {
+  const eso = await axios.put(`${baseURL}/api/transactions/${data.id}`, {
     data
   }).then(res => {
     return res.data
   })
+  return eso.data
 }
 
 export async function deleteTransaction(id: number) {
-  await axios.delete(`${baseURL}/api/transactions/${id}`)
+  const eso = await axios.delete(`${baseURL}/api/transactions/${id}`)
     .then(res => {
       return res.data
     })
+    return eso.data
 }
