@@ -20,11 +20,12 @@ import { createTransaction } from "@/lib/request/transaction"
 
 
 type Props={
+  selectedId: number
   open: boolean,
   setOpen: (arg0:boolean)=>void
 }
 
-export default function CreateTransactionForm({open, setOpen}:Props) {
+export default function CreateTransactionForm({selectedId,open, setOpen}:Props) {
   const queryClient = useQueryClient()
   const [type, setType] = useState<TransactionType>("INCOME")
   const [frequency, setFrequency] = useState<Frequency>("ONE_TIME")

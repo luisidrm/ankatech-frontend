@@ -13,6 +13,7 @@ import { userList } from "@/lib/request/users";
 import { useState } from "react";
 import type { UpdateSimulationBody } from "@/schemas/simulation.schema";
 import UpdateSimulationForm from "@/components/forms/UpdateSimulationForm"
+import { useQuery } from "@tanstack/react-query";
 
 enum Toggle {
   Actual = "actual",
@@ -22,7 +23,7 @@ enum Toggle {
 export default function Home() {
 
   const [toggle, setToggle] = useState<Toggle>(Toggle.Original)
-  const [selectedId, setSelectedId] = useState<string | null>(null)
+  const [selectedId, setSelectedId] = useState<number | null>(null)
   const [status, setStatus] = useState<"alive" | "dead" | "invalid">("alive")
   const [updateData, setUpdateData] = useState<UpdateSimulationBody>({})
 
@@ -59,7 +60,10 @@ export default function Home() {
         setSelectedId={setSelectedId}
       />
       <div className="w-full h-[30px] bg-transparent flex justify-center place-items-center mb-2">
-        <StatusToggle status={status} setStatus={setStatus} />
+        <StatusToggle 
+          status={status} 
+          setStatus={setStatus} 
+        />
       </div>
       <Center
         projection={projection}
@@ -83,7 +87,7 @@ export default function Home() {
             />
             <span className="max-md:hidden">Plano Original</span>
             {/* <Button type="button" className="bg-transparent p-0 hover:bg-transparent"><EllipsisVertical /></Button> */}
-            <Dropdown simulation={projection[0].id} fillUpdateData={fillUpdateData} updateData={updateData} />
+            <Dropdown simulation={projection?[0].id} fillUpdateData={fillUpdateData} updateData={updateData} />
           </ToggleGroupItem>
           <ToggleGroupItem value={Toggle.Actual} aria-label="Situacao"
             className="bg-[#1B1B1B] rounded-lg border-[#48F7A1] border-2 data-[state=on]:bg-transparent data-[state=on]:text-white">
@@ -97,14 +101,17 @@ export default function Home() {
             />
             <span className="max-md:hidden">Situacao atual {`${Date.prototype.getMonth.call(new Date())}/${Date.prototype.getFullYear.call(new Date())}`}</span>
             {/* <Button type="button" onClick={()=>setOption(!option)} className="bg-transparent p-0 hover:bg-transparent"><EllipsisVertical /></Button> */}
-            <Dropdown simulation={projection[1].id} fillUpdateData={fillUpdateData} updateData={updateData} />
+            <Dropdown simulation={projection} fillUpdateData={fillUpdateData} updateData={updateData} />
           </ToggleGroupItem>
           <Button className="bg-[#1B1B1B] rounded-lg bg-transparent hover:bg-transparent border-2 border-[#F7B748]">Realizado</Button>
           <Button className="bg-[#1B1B1B] rounded-lg bg-transparent hover:bg-transparent ">+ Adicionar Simulacion</Button>
         </ToggleGroup>
       </div>
-      <Timeline/>
+      <Timeline
+        id={selectedId}
+      />
       <Bottom
+        selectedId={selectedId}
         toggle={toggle}
       />
     </div >

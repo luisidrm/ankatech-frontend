@@ -18,8 +18,13 @@ enum Selector {
   Finance = "finance",
   RealEstate = "real_estate"
 }
+type Props={
+  selectedId: number
+  toggle: string
+}
 
-export default function Bottom({ selectedId, toggle }: Readonly<{ toggle: string }>) {
+
+export default function Bottom({ selectedId, toggle }: Props) {
   const queryClient = useQueryClient()
 
   const [selector, setSelector] = useState<Selector>(Selector.Finance)
@@ -104,6 +109,7 @@ export default function Bottom({ selectedId, toggle }: Readonly<{ toggle: string
   return (
     <div className="w-full h-auto bg-transparent mb-2">
       {open && <CreateTransactionForm
+        selectedId={selectedId}
         open={open}
         setOpen={setOpen}
       />}

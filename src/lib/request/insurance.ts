@@ -3,14 +3,19 @@ import type{ CreateInsuranceBody, UpdateInsuranceBody } from "@/schemas/insuranc
 import axios from "axios"
 
 export async function getInsurance(id:number){
-  await axios.get(`${baseURL}/api/insurance/${id}`)
+  await axios.get(`${baseURL}/api/insurance/`,{
+    params:{
+      simulationId:id
+    }
+  })
   .then(res=>{
     return res.data
   })
 }
 
 export async function createInsurance(id:number, data:CreateInsuranceBody) {
-  await axios.post(`${baseURL}/api/${id}/insurance`,{
+  await axios.post(`${baseURL}/api/insurance`,{
+    simulationId:id,
     data
   }).then(res=>{
     return res.data

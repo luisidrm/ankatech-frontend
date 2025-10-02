@@ -7,13 +7,14 @@ import { useQuery } from "@tanstack/react-query"
 const years = [2025, 2030, 2035, 2040, 2045, 2050, 2055, 2060]
 
 type Props={
-  id: number
+  id: number|undefined
 }
 
 export default function Timeline({id}:Props) {
   const {data} = useQuery({
     queryKey:["income", "expense"],
-    queryFn:()=>getTransaction(id)
+    queryFn:()=>getTransaction(id!),
+    enabled: !!id
   })
 
   return (

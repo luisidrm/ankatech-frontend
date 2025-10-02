@@ -4,7 +4,7 @@ import type{ UpdateSimulationBody } from "@/schemas/simulation.schema";
 import { EllipsisVertical } from "lucide-react";
 
 type Props ={
-  simulation: number
+  simulation: number | undefined
   fillUpdateData: (arg0: UpdateSimulationBody)=>void
   updateData: UpdateSimulationBody
 }

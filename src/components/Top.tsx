@@ -12,9 +12,8 @@ import ProjectionCard from "./ProjectionCard";
 import type{ User } from "@/types/user";
 
 type Props={
-  data: User[]
-  selectedId: string|null
-  setSelectedId: (arg0: string)=>void
+  data: User[]|undefined |void
+  setSelectedId: (arg0: number)=>void
 }
 
 export default function Top({data, setSelectedId}:Props) {
@@ -22,7 +21,7 @@ export default function Top({data, setSelectedId}:Props) {
   return (
     <div className="bg-transaparent text-white flex justify-between w-full h-[230px] pl-12 pt-12">
       <div className="bg-transaparent text-white">
-        <Select onValueChange={(val) => setSelectedId(val)}>
+        <Select onChange={(val:number) => setSelectedId(val)}>
           <SelectTrigger className="w-[250px] h-8 bg-black border-white text-white border-1-white rounded-2xl">
             <SelectValue className="text-xl" />
           </SelectTrigger>

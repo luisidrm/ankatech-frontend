@@ -20,7 +20,7 @@ enum Vista {
   detalles = "detalles"
 }
 type Props={
-  projection: unknown[]
+  projection: []
   toggle: Readonly<{ toggle?: string }>
 }
 
